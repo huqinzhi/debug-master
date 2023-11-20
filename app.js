@@ -35,7 +35,7 @@ const type = '50100';
                     img = 'data:image/png;base64,' + img;
                     let { data = {} } = await axios.post('http://api.jfbym.com/api/YmServer/customApi', { image: img, token, type });
                     let { data: value = 0, code = 0 } = data.data;
-                    if (value == 0) {
+                    if (value == 0&&code!= 1000) {
                         let codestr = codes[code] ?? "不晓得是啥问题，去平台看看吧"
                         console.log(`验证码获取失败，平台的返回结果是：${code}-${codestr}`);
                         message += `<div>验证码获取失败，平台的返回结果是：${code}-${codestr}</div>`;
