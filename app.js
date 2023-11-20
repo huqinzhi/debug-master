@@ -20,7 +20,7 @@ const codes = {
     10010: '请求结束',
 };
 
-const type = '50100';
+const type = '50106';
 (async () => {
     const browser = await puppeteer.launch({ headless: "new", args: ["--no-sandbox", "--disabled-setupid-sandbox"], defaultViewport: null, executablePath: process.env.GOOGLE_CHROME_PATH });
     const page = await browser.newPage();
