@@ -1,0 +1,36 @@
+name: Auto1
+
+on:
+  schedule:
+    - cron: "10 22 * * *" # 北京时间上午06:30
+  workflow_dispatch:
+  
+env:
+  PUSHTOKEN: ${{ secrets.PUSHTOKEN }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  USERNAME: ${{ secrets.USERNAME }}
+  CODETOKEN: ${{ secrets.CODETOKEN }}
+
+jobs:
+  CheckIn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Run Project
+        run: |
+          echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
+          echo "GOOGLE_CHROME_PATH=$(which google-chrome)" >> $GITHUB_ENV
+          npm install
+          node app.js
+#  SeaGold:
+#    needs: CheckIn
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-node@v2
+#      - name: Run Project
+#        run: |
+#          cd workflows
+#          yarn
+#          yarn seagold
