@@ -22,7 +22,7 @@ const codes = {
 
 const type = '50100';
 (async () => {
-    const browser = await puppeteer.launch({ headless:"new",args: ["--no-sandbox", "--disabled-setupid-sandbox"],defaultViewport: null,executablePath:process.env.GOOGLE_CHROME_PATH });
+    const browser = await puppeteer.launch({ headless: "new", args: ["--no-sandbox", "--disabled-setupid-sandbox"], defaultViewport: null, executablePath: process.env.GOOGLE_CHROME_PATH });
     const page = await browser.newPage();
     page.on('response',
         function (response) {
@@ -40,11 +40,13 @@ const type = '50100';
                         console.log(`验证码获取失败，平台的返回结果是：${code}-${codestr}`);
                         message += `<div>验证码获取失败，平台的返回结果是：${code}-${codestr}</div>`;
                         console.log("任务结束，正在退出")
-                        process.exit(1)
+                        await page.close();
+                        await browser.disconnect();
+                        return;
                     }
                     await page.click(".el-input__inner");
                     await page.type(".el-input__inner", process.env.USERNAME);
-                    await page.type(".el-form-item:nth-child(3) .el-input__inner",process.env.PASSWORD);
+                    await page.type(".el-form-item:nth-child(3) .el-input__inner", process.env.PASSWORD);
                     console.log(`验证码获取成功，值为${value}`)
                     message += `<div>验证码获取成功，值为${value}</div>`;
                     await page.type(".el-form-item:nth-child(4) .el-input__inner", `${value}`);
@@ -85,7 +87,8 @@ const type = '50100';
                     let url = `http://www.pushplus.plus/send?token=${process.env.PUSHTOKEN}&title=debug签到&content=${message}&template=html`;
                     await axios.get(url);
                     console.log("任务结束，正在退出")
-                    process.exit(1)
+                    await page.close();
+                    await browser.disconnect();
                 })
             }
 
