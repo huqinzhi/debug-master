@@ -42,7 +42,7 @@ const type = '50100';
                         console.log("任务结束，正在退出")
                         await page.close();
                         await browser.disconnect();
-                        return;
+                        process.exit(0)
                     }
                     await page.click(".el-input__inner");
                     await page.type(".el-input__inner", process.env.USERNAME);
@@ -89,6 +89,7 @@ const type = '50100';
                     console.log("任务结束，正在退出")
                     await page.close();
                     await browser.disconnect();
+                    process.exit(0)
                 })
             }
 
